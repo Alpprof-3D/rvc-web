@@ -1,0 +1,106 @@
+/* Temel Ayarlar */
+body {
+    background-color: #000000;
+    color: white;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    display: flex;
+    height: 100vh;
+}
+
+/* Yan Menü (Sidebar) */
+.sidebar {
+    width: 300px;
+    background-color: #0a0a0a;
+    border-right: 1px solid #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+h1 {
+    font-family: 'Impact', sans-serif;
+    font-size: 40px;
+    letter-spacing: 2px;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.menu-item {
+    margin-bottom: 25px;
+}
+
+label {
+    color: #888;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* Seçim Menüleri ve Inputlar */
+select, input[type="checkbox"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    color: white;
+    border-radius: 5px;
+}
+
+/* Başlat Butonu */
+#startBtn {
+    margin-top: auto;
+    background-color: white;
+    color: black;
+    border: none;
+    padding: 15px;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#startBtn:hover {
+    background-color: #ddd;
+}
+
+/* Ana İçerik Alanı */
+.main {
+    flex: 1;
+    padding: 50px;
+    overflow-y: auto;
+}
+
+h2 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+/* Şarkı Listesi Satırları */
+.song-list .song-item {
+    background-color: #111;
+    padding: 20px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    transition: 0.2s;
+}
+
+.song-list .song-item:hover {
+    background-color: #151515;
+}
+
+.play-btn {
+    background-color: #222;
+    border: none;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+}
