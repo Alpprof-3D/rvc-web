@@ -1,21 +1,28 @@
 document.getElementById('startBtn').addEventListener('click', async () => {
     const fileInput = document.getElementById('audioInput');
-    const modelId = document.getElementById('hfModelId').value;
+    const modelIdInput = document.getElementById('hfModelId'); // Önce öğeyi alalım
     const btn = document.getElementById('startBtn');
     const songList = document.getElementById('songList');
 
-    if (!fileInput.files[0]) {
-        alert("Lütfen bir ses dosyası seçin!");
+    // HATA KONTROLÜ: Öğeler sayfada var mı?
+    if (!fileInput || !modelIdInput) {
+        console.error("Gerekli HTML öğeleri bulunamadı! ID'leri kontrol edin.");
         return;
     }
 
-    btn.innerText = "HALKA AÇIK SUNUCUYA BAĞLANIYOR...";
+    const modelId = modelIdInput.value;
+
+    if (!fileInput.files[0]) {
+        alert("Lütfen önce bir ses dosyası seçin!");
+        return;
+    }
+
+    btn.innerText = "İŞLENİYOR...";
     btn.disabled = true;
 
     try {
         const audioData = await fileInput.files[0].arrayBuffer();
 
-        // Token gönderilmiyor, doğrudan public istek yapılıyor
         const response = await fetch(
             `https://api-inference.huggingface.co/models/${modelId}`,
             {
@@ -24,26 +31,17 @@ document.getElementById('startBtn').addEventListener('click', async () => {
             }
         );
 
-        if (response.status === 503) {
-            throw new Error("Model şu an yükleniyor, lütfen 20 saniye sonra tekrar deneyin.");
-        }
-
-        if (!response.ok) {
-            throw new Error("Halka açık erişim şu an kısıtlı veya model Token gerektiriyor.");
-        }
+        if (!response.ok) throw new Error("API erişimi şu an sağlanamıyor.");
 
         const result = await response.json();
         
         const item = document.createElement('div');
         item.className = 'song-item';
-        item.innerHTML = `
-            <span>Analiz Sonucu: ${JSON.stringify(result.text || result).substring(0, 45)}...</span>
-            <button style="background:#222; border:none; color:#00ffcc; border-radius:50%; width:30px; height:30px;">✓</button>
-        `;
+        item.innerHTML = `<span>Sonuç: ${JSON.stringify(result).substring(0, 40)}...</span>`;
         songList.prepend(item);
 
     } catch (error) {
-        alert(error.message);
+        alert("Hata: " + error.message);
     } finally {
         btn.innerText = "ANALİZ ET & BAŞLAT";
         btn.disabled = false;
