@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weights RVC - Cloud Studio</title>
+    <title>Weights x Liquid AI Studio</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,36 +11,32 @@
         <h1>WEIGHTS</h1>
         
         <div class="menu-item">
-            <label>AI Cover Modu</label>
-            <input type="checkbox" id="coverMode" checked>
+            <label>AI Modu</label>
+            <div class="status-badge">Liquid LFM-2.5 Active</div>
         </div>
 
         <div class="menu-item">
-            <label>Hugging Face Model ID</label>
-            <input type="text" id="hfModelId" value="facebook/hubert-large-ls960-ft">
+            <label>Model ID (Liquid AI)</label>
+            <input type="text" id="hfModelId" value="LiquidAI/LFM2.5-Audio-1.5B">
         </div>
 
         <div class="menu-item">
-            <label>HF API Token</label>
+            <label>Hugging Face Token</label>
             <input type="password" id="hfToken" placeholder="hf_xxxxxxxxxxxx">
         </div>
 
         <div class="menu-item">
-            <label>Ses Dosyası Yükle</label>
+            <label>Ses Dosyası (WAV/MP3)</label>
             <input type="file" id="audioInput" accept="audio/*">
         </div>
 
-        <button id="startBtn">BULUTTA BAŞLAT</button>
+        <button id="startBtn">BULUTTA İŞLE</button>
     </div>
 
     <div class="main">
-        <h2>Ögelerim</h2>
+        <h2>İşlem Geçmişi</h2>
         <div id="songList" class="song-list">
-            <div class="song-item">
-                <span>Sistem Hazır. Dosya seçip Başlat'a basın.</span>
-                <button class="play-btn">i</button>
             </div>
-        </div>
     </div>
 
     <script src="script.js"></script>
