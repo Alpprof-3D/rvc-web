@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weights x Liquid AI Studio</title>
+    <title>Weights Public AI Studio</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,30 +11,26 @@
         <h1>WEIGHTS</h1>
         
         <div class="menu-item">
-            <label>AI Modu</label>
-            <div class="status-badge">Liquid LFM-2.5 Active</div>
+            <label>Sistem Durumu</label>
+            <div class="status-badge">HALKA AÇIK MOD (Ücretsiz)</div>
         </div>
 
         <div class="menu-item">
-            <label>Model ID (Liquid AI)</label>
-            <input type="text" id="hfModelId" value="LiquidAI/LFM2.5-Audio-1.5B">
+            <label>Aktif Model</label>
+            <input type="text" id="hfModelId" value="facebook/wav2vec2-base-960h">
         </div>
 
         <div class="menu-item">
-            <label>Hugging Face Token</label>
-            <input type="password" id="hfToken" placeholder="hf_xxxxxxxxxxxx">
-        </div>
-
-        <div class="menu-item">
-            <label>Ses Dosyası (WAV/MP3)</label>
+            <label>Ses Dosyası Yükle</label>
             <input type="file" id="audioInput" accept="audio/*">
         </div>
 
-        <button id="startBtn">BULUTTA İŞLE</button>
+        <button id="startBtn">ANALİZ ET & BAŞLAT</button>
+        <p style="font-size: 10px; color: #555; margin-top: 15px; text-align: center;">Halka açık modellerde bazen yoğunluk nedeniyle gecikme olabilir.</p>
     </div>
 
     <div class="main">
-        <h2>İşlem Geçmişi</h2>
+        <h2>Ögelerim</h2>
         <div id="songList" class="song-list">
             </div>
     </div>
