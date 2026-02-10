@@ -1,67 +1,51 @@
 document.getElementById('startBtn').addEventListener('click', async () => {
     const fileInput = document.getElementById('audioInput');
-    const token = document.getElementById('hfToken').value;
     const modelId = document.getElementById('hfModelId').value;
     const btn = document.getElementById('startBtn');
     const songList = document.getElementById('songList');
 
-    if (!fileInput.files[0] || !token) {
-        alert("Lütfen bir ses dosyası yükleyin ve API Token girin!");
+    if (!fileInput.files[0]) {
+        alert("Lütfen bir ses dosyası seçin!");
         return;
     }
 
-    btn.innerText = "LIQUID LFM İŞLİYOR...";
+    btn.innerText = "HALKA AÇIK SUNUCUYA BAĞLANIYOR...";
     btn.disabled = true;
 
     try {
         const audioData = await fileInput.files[0].arrayBuffer();
 
+        // Token gönderilmiyor, doğrudan public istek yapılıyor
         const response = await fetch(
             `https://api-inference.huggingface.co/models/${modelId}`,
             {
-                headers: { 
-                    "Authorization": `Bearer ${token}`,
-                    "Content-Type": "application/octet-stream"
-                },
                 method: "POST",
                 body: audioData,
             }
         );
 
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.error || "API Hatası oluştu.");
+        if (response.status === 503) {
+            throw new Error("Model şu an yükleniyor, lütfen 20 saniye sonra tekrar deneyin.");
         }
 
-        const contentType = response.headers.get("Content-Type");
+        if (!response.ok) {
+            throw new Error("Halka açık erişim şu an kısıtlı veya model Token gerektiriyor.");
+        }
+
+        const result = await response.json();
+        
         const item = document.createElement('div');
         item.className = 'song-item';
-
-        // Eğer model ses dosyası döndürürse
-        if (contentType && contentType.includes("audio")) {
-            const audioBlob = await response.blob();
-            const audioUrl = URL.createObjectURL(audioBlob);
-            item.innerHTML = `
-                <span>Liquid Ses Çıktısı - ${new Date().toLocaleTimeString()}</span>
-                <audio controls src="${audioUrl}" style="height:32px;"></audio>
-            `;
-        } 
-        // Eğer model analiz/metin döndürürse
-        else {
-            const result = await response.json();
-            item.innerHTML = `
-                <span>Analiz: ${JSON.stringify(result).substring(0, 50)}...</span>
-                <button class="play-btn" style="background:#00ffcc; color:#000; border:none; border-radius:4px; padding:5px 10px; cursor:pointer;">KOPYALA</button>
-            `;
-        }
-        
+        item.innerHTML = `
+            <span>Analiz Sonucu: ${JSON.stringify(result.text || result).substring(0, 45)}...</span>
+            <button style="background:#222; border:none; color:#00ffcc; border-radius:50%; width:30px; height:30px;">✓</button>
+        `;
         songList.prepend(item);
 
     } catch (error) {
-        alert("Hata: " + error.message);
-        console.error(error);
+        alert(error.message);
     } finally {
-        btn.innerText = "BULUTTA İŞLE";
+        btn.innerText = "ANALİZ ET & BAŞLAT";
         btn.disabled = false;
     }
 });
